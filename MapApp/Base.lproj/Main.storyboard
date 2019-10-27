@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="U09-T7-VWb">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MapApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="VIM-bB-nuX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </mapView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Kfc-di-HUq">
+                                <rect key="frame" x="93.5" y="831" width="227" height="32"/>
+                                <segments>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                    <segment title="Hybrid"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentedControlAction:" destination="BYZ-38-t0r" eventType="valueChanged" id="dfP-tl-Osc"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6XE-pJ-BN0">
+                                <rect key="frame" x="370" y="141" width="36.5" height="35.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" image="plus.circle.fill" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="showCameraViewController:" destination="BYZ-38-t0r" eventType="touchUpInside" id="egd-c1-l4P"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lCq-ax-A6p" userLabel="Current Location Button">
+                                <rect key="frame" x="370" y="184" width="36.5" height="36.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36.5" id="bzu-gL-oXf"/>
+                                </constraints>
+                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" image="location" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25"/>
+                                </state>
+                                <state key="selected" image="location.fill" catalog="system"/>
+                                <state key="highlighted" image="location.fill" catalog="system"/>
+                                <connections>
+                                    <action selector="centerMapToCurrentLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R0e-7W-t0a"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="VIM-bB-nuX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="9Sk-SU-7Eb"/>
+                            <constraint firstItem="lCq-ax-A6p" firstAttribute="leading" secondItem="6XE-pJ-BN0" secondAttribute="leading" id="FpK-b9-Jiq"/>
+                            <constraint firstAttribute="bottom" secondItem="VIM-bB-nuX" secondAttribute="bottom" id="H2d-Wj-7Vf"/>
+                            <constraint firstItem="VIM-bB-nuX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Heh-0s-ykQ"/>
+                            <constraint firstItem="6XE-pJ-BN0" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="53" id="Q4X-Fc-bss"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="6XE-pJ-BN0" secondAttribute="trailing" constant="7.5" id="b4t-Xg-bDs"/>
+                            <constraint firstItem="lCq-ax-A6p" firstAttribute="trailing" secondItem="6XE-pJ-BN0" secondAttribute="trailing" id="dR0-YA-eWb"/>
+                            <constraint firstItem="lCq-ax-A6p" firstAttribute="top" secondItem="6XE-pJ-BN0" secondAttribute="bottom" constant="7.5" id="hTw-CO-dS7"/>
+                            <constraint firstItem="Kfc-di-HUq" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ofh-jN-cP7"/>
+                            <constraint firstAttribute="trailing" secondItem="VIM-bB-nuX" secondAttribute="trailing" id="tdO-DQ-vEv"/>
+                            <constraint firstItem="Kfc-di-HUq" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="wAu-hQ-3JF"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="gV6-GJ-rhr"/>
+                    <connections>
+                        <outlet property="cameraButton" destination="6XE-pJ-BN0" id="Mlx-ZM-HiI"/>
+                        <outlet property="mapTypeButton" destination="Kfc-di-HUq" id="pr4-iI-e26"/>
+                        <outlet property="mapView" destination="VIM-bB-nuX" id="wzJ-EJ-jwt"/>
+                        <segue destination="ZvE-Vv-Ovg" kind="show" identifier="SegueToCameraViewController" id="Nzz-8N-S3N"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="101.78571428571428"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="ybO-aP-O72">
+            <objects>
+                <viewController id="ZvE-Vv-Ovg" customClass="CameraViewController" customModule="MapApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="d2E-et-3bf">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fjc-gt-QTq">
+                                <rect key="frame" x="169" y="613" width="76" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Take Photo"/>
+                                <connections>
+                                    <action selector="takePhoto:" destination="ZvE-Vv-Ovg" eventType="touchUpInside" id="dms-Qm-yxm"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAi-E2-McH">
+                                <rect key="frame" x="82" y="212" width="250" height="250"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="1JY-kR-xbh"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Kd2-BF-rjq"/>
+                    <connections>
+                        <outlet property="imageView" destination="sAi-E2-McH" id="bDd-B0-LET"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bcq-Pr-Tw3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="862" y="101"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="L8R-cs-fjn">
+            <objects>
+                <navigationController id="U09-T7-VWb" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="3Oj-uD-VIf">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="zDO-D7-eLH"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YSi-h7-8d9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-597" y="110"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="location" catalog="system" width="64" height="60"/>
+        <image name="location.fill" catalog="system" width="64" height="60"/>
+        <image name="plus.circle.fill" catalog="system" width="64" height="62"/>
+    </resources>
+</document>
