@@ -9,50 +9,39 @@
 import UIKit
 import AVFoundation
 
-class CameraViewController: UIViewController, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
-    var imagePicker: UIImagePickerController!
-    @IBOutlet weak var imageView: UIImageView!
-    @IBAction func takePhoto(_ sender: Any) {
-        imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        
-        present(imagePicker, animated: true, completion: nil)
-    }
+class CameraViewController: UIViewController, UINavigationControllerDelegate, UITableViewDataSource {
     
-   
+    @IBOutlet weak var tableView: UITableView!
+    
+    var gasStationsForTable = [GasStation]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Camera View"
+        navigationItem.title = "Info"
+        tableView.dataSource = self
         // Do any additional setup after loading the view.
     }
     func viewWillAppear(){
-//        let vc = UIImagePickerController()
-//        vc.sourceType = .camera
-//        vc.allowsEditing = true
-//        vc.delegate = self
-//        present(vc, animated: true)
-//        CameraHandler.shared.showActionSheet(vc: self)
-//        CameraHandler.shared.imagePickedBlock = { (image) in
-//            /* get your image here */
-//        }
-        imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
         
-        present(imagePicker, animated: true, completion: nil)
+
+       
     }
     override func viewDidAppear(_ animated: Bool) {
-        imagePicker =  UIImagePickerController()
-        imagePicker.delegate = self
-        imagePicker.sourceType = .camera
-        
-        present(imagePicker, animated: true, completion: nil)
+       
     }
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        imagePicker.dismiss(animated: true, completion: nil)
-        imageView.image = info[.originalImage] as? UIImage
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+         return gasStationsForTable.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+         let cell = tableView.dequeueReusableCell(withIdentifier: "cellReuseIdentifier")! //1.
+        let text = gasStationsForTable[indexPath.row].prices.map({"\($0)"}).joined(separator:", ")
+            
+         cell.textLabel?.text = text //3.
+            
+         return cell //4.
     }
     
     

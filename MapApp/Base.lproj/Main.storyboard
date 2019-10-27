@@ -55,10 +55,22 @@
                                     <action selector="centerMapToCurrentLocation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="R0e-7W-t0a"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UWH-hW-vzZ">
+                                <rect key="frame" x="370" y="228" width="36.5" height="35.5"/>
+                                <color key="tintColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <state key="normal" image="info.circle" catalog="system">
+                                    <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="25" scale="large"/>
+                                </state>
+                                <connections>
+                                    <action selector="showTableView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="WJc-f9-Fjt"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UWH-hW-vzZ" secondAttribute="trailing" constant="7.5" id="4R0-zi-ZxD"/>
                             <constraint firstItem="VIM-bB-nuX" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="9Sk-SU-7Eb"/>
+                            <constraint firstItem="UWH-hW-vzZ" firstAttribute="top" secondItem="lCq-ax-A6p" secondAttribute="bottom" constant="7.5" id="ElY-DO-fkk"/>
                             <constraint firstItem="lCq-ax-A6p" firstAttribute="leading" secondItem="6XE-pJ-BN0" secondAttribute="leading" id="FpK-b9-Jiq"/>
                             <constraint firstAttribute="bottom" secondItem="VIM-bB-nuX" secondAttribute="bottom" id="H2d-Wj-7Vf"/>
                             <constraint firstItem="VIM-bB-nuX" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Heh-0s-ykQ"/>
@@ -92,25 +104,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Fjc-gt-QTq">
-                                <rect key="frame" x="169" y="613" width="76" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Take Photo"/>
-                                <connections>
-                                    <action selector="takePhoto:" destination="ZvE-Vv-Ovg" eventType="touchUpInside" id="dms-Qm-yxm"/>
-                                </connections>
-                            </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sAi-E2-McH">
-                                <rect key="frame" x="82" y="212" width="250" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Flj-oK-gW8">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellReuseIdentifier" id="SL6-1G-xqi">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="43.5"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="SL6-1G-xqi" id="vkc-7c-IbC">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Flj-oK-gW8" firstAttribute="top" secondItem="1JY-kR-xbh" secondAttribute="top" id="Df2-0O-VLz"/>
+                            <constraint firstAttribute="bottom" secondItem="Flj-oK-gW8" secondAttribute="bottom" id="dBE-Zw-F4C"/>
+                            <constraint firstAttribute="trailing" secondItem="Flj-oK-gW8" secondAttribute="trailing" id="ego-zZ-B5a"/>
+                            <constraint firstItem="Flj-oK-gW8" firstAttribute="leading" secondItem="d2E-et-3bf" secondAttribute="leading" id="ntY-yr-9Om"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="1JY-kR-xbh"/>
                     </view>
                     <navigationItem key="navigationItem" id="Kd2-BF-rjq"/>
                     <connections>
-                        <outlet property="imageView" destination="sAi-E2-McH" id="bDd-B0-LET"/>
+                        <outlet property="tableView" destination="Flj-oK-gW8" id="kZE-bK-XHv"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Bcq-Pr-Tw3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -135,6 +155,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="info.circle" catalog="system" width="64" height="62"/>
         <image name="location" catalog="system" width="64" height="60"/>
         <image name="location.fill" catalog="system" width="64" height="60"/>
         <image name="plus.circle.fill" catalog="system" width="64" height="62"/>

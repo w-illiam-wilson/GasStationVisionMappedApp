@@ -19,10 +19,13 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var mapTypeButton: UISegmentedControl!
     @IBOutlet weak var cameraButton: UIButton!
+    @IBAction func showTableView(_ sender: Any) {
+        performSegue(withIdentifier: "SegueToCameraViewController", sender: self)
+    }
     
     let regionRadius: CLLocationDistance = 1000
     
-    var gasStations = [GasStation(prices: [1.0,2.0], lattitude: 51.5549, longtitude: -0.108436)]
+    var gasStations = [GasStation]()
     //let gasStations = [GasStation(prices: [1.0,2.0], lattitude: 51.5549, longtitude: -0.108436)]
     
     var lastUserLocation: MKUserLocation?
@@ -33,11 +36,12 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     let vision = Vision.vision()
     var listOfPricesCurrent = [Float]()
     
-    
+    var buttonBeingPressed = false
     @IBAction func centerMapToCurrentLocation(_ sender: Any) {
         centerMapOnLocation(location: currentlocation)
     }
     @IBAction func showCameraViewController(_ sender: Any) {
+        buttonBeingPressed = true
         imagePicker =  UIImagePickerController()
         imagePicker.delegate = self
         // create the alert
@@ -60,8 +64,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 
         // show the alert
         self.present(alert, animated: true, completion: nil)
-        //performSegue(withIdentifier: "SegueToCameraViewController", sender: self)
-                
+        buttonBeingPressed = false
         
     }
     @IBAction func segmentedControlAction(_ sender: Any) {
@@ -83,7 +86,7 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
 //        cameraButton.layer.borderWidth = 1
 //        cameraButton.layer.borderColor = UIColor.black.cgColor
         count = 0
-        navigationItem.title = "Root View"
+        //navigationItem.title = "Root View"
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         // Do any additional setup after loading the view.
         checkLocationServices()
@@ -114,7 +117,10 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         // Show the Navigation Bar
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        if buttonBeingPressed == false {
+            self.navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
+        buttonBeingPressed = false
     }
     
     
@@ -162,6 +168,41 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
           guard error == nil, let result = result else {
             // ...
             print("error help")
+            let alert = UIAlertController(title: "Uh oh!", message: "Make sure a gas station sign is in the frame.", preferredStyle: UIAlertController.Style.alert)
+
+            // add the actions (buttons)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                self.buttonBeingPressed = true
+                self.imagePicker =  UIImagePickerController()
+                self.imagePicker.delegate = self
+                // create the alert
+                //https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
+                let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.alert)
+
+                // add the actions (buttons)
+                alert.addAction(UIAlertAction(title: "Camera", style: UIAlertAction.Style.default, handler: { action in
+                    self.imagePicker.sourceType = .camera
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                    
+                }))
+                alert.addAction(UIAlertAction(title: "Photo Library", style: UIAlertAction.Style.default, handler: { action in
+                    self.imagePicker.sourceType = .photoLibrary
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                    
+                }))
+                alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+                
+
+                // show the alert
+                self.present(alert, animated: true, completion: nil)
+                self.buttonBeingPressed = false
+                
+            }))
+            alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+            
+
+            // show the alert
+            self.present(alert, animated: true, completion: nil)
             return
           }
             let resultText = result.text
@@ -238,17 +279,54 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
                     }
                     
                 }
-                
-                self.listOfPricesCurrent = priceList2
-                self.gasStations.append(GasStation(prices: self.listOfPricesCurrent, lattitude: self.currentlocation.coordinate.latitude, longtitude: self.currentlocation.coordinate.longitude))
-                let annotations = MKPointAnnotation()
-                
-                annotations.title = self.listOfPricesCurrent.map({"\($0)"}).joined(separator:", ")
-                annotations.coordinate = CLLocationCoordinate2D(latitude: self.currentlocation.coordinate.latitude, longitude: self.currentlocation.coordinate.longitude)
-                self.mapView.addAnnotation(annotations)
-                self.fetchStadiumsOnMap(self.gasStations)
-                print(self.gasStations)
-                
+                print(self.listOfPricesCurrent.count, "!")
+                if priceList2.count > 0 {
+                    self.listOfPricesCurrent = priceList2
+                    self.gasStations.append(GasStation(prices: self.listOfPricesCurrent, lattitude: self.currentlocation.coordinate.latitude, longtitude: self.currentlocation.coordinate.longitude))
+                    let annotations = MKPointAnnotation()
+                    
+                    annotations.title = self.listOfPricesCurrent.map({"\($0)"}).joined(separator:", ")
+                    annotations.coordinate = CLLocationCoordinate2D(latitude: self.currentlocation.coordinate.latitude, longitude: self.currentlocation.coordinate.longitude)
+                    self.mapView.addAnnotation(annotations)
+                    self.fetchStadiumsOnMap(self.gasStations)
+                    print(self.gasStations)
+                } else {
+                    let alert = UIAlertController(title: "Uh oh!", message: "Make sure a gas station sign is in the frame.", preferredStyle: UIAlertController.Style.alert)
+
+                    // add the actions (buttons)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.default, handler: { action in
+                        self.buttonBeingPressed = true
+                        self.imagePicker =  UIImagePickerController()
+                        self.imagePicker.delegate = self
+                        // create the alert
+                        //https://stackoverflow.com/questions/24022479/how-would-i-create-a-uialertview-in-swift
+                        let alert = UIAlertController(title: nil, message: nil, preferredStyle: UIAlertController.Style.alert)
+
+                        // add the actions (buttons)
+                        alert.addAction(UIAlertAction(title: "Camera", style: UIAlertAction.Style.default, handler: { action in
+                            self.imagePicker.sourceType = .camera
+                            self.present(self.imagePicker, animated: true, completion: nil)
+                            
+                        }))
+                        alert.addAction(UIAlertAction(title: "Photo Library", style: UIAlertAction.Style.default, handler: { action in
+                            self.imagePicker.sourceType = .photoLibrary
+                            self.present(self.imagePicker, animated: true, completion: nil)
+                            
+                        }))
+                        alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+                        
+
+                        // show the alert
+                        self.present(alert, animated: true, completion: nil)
+                        self.buttonBeingPressed = false
+                        
+                    }))
+                    alert.addAction(UIAlertAction(title: "Cancel", style: UIAlertAction.Style.cancel, handler: nil))
+                    
+
+                    // show the alert
+                    self.present(alert, animated: true, completion: nil)
+                }
             }
             
           // Recognized text
@@ -306,6 +384,14 @@ class ViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDele
         }
 
         return annotationView
+    }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "SegueToCameraViewController" {
+            if let nextViewController = segue.destination as? CameraViewController {
+                    nextViewController.gasStationsForTable = gasStations //Or pass any values
+
+            }
+        }
     }
 
 
